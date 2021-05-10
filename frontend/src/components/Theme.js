@@ -25,6 +25,7 @@ export const theme = {
         success: palette.green,
         danger: palette.red,
         failure: palette.red,
+        darkerforeground: palette.aliceblue,
     },
     spacing: {
         s: 8,

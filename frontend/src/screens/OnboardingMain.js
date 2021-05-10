@@ -33,6 +33,10 @@ export default function OnboardingMain({ navigation }) {
         // navigation.navigate("Last");
     };
 
+    const onGetStarted = () => {
+        navigation.navigate("Landing");
+    };
+
     const setSliderPage = ({ x }) => {
         const { currentPage } = sliderState;
         const indexOfNextScreen = Math.floor(x / width);
@@ -67,7 +71,7 @@ export default function OnboardingMain({ navigation }) {
                 <View style={{ paddingBottom: 120 }}>
                     <Button
                         style={{ marginLeft: 50 }}
-                        onPress={() => onPressNext(width * pageIndex)}
+                        onPress={() => onGetStarted()}
                         size="large"
                         type="filled"
                     >

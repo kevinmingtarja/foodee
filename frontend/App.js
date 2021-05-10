@@ -5,7 +5,7 @@ import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
 
 import { theme, darkTheme, ThemeContext } from "./src/components/Theme";
-import RootNavigator from "./src/navigation/Root";
+import RootNavigator from "./src/navigation/RootNavigator";
 
 export default function App() {
     // To-Do: Create Dark Mode

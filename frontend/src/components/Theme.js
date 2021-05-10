@@ -8,6 +8,7 @@ const palette = {
     blackcoral: "#5D6275",
     manatee: "#8D99AE",
     aliceblue: "#EDF2F4",
+    lightgrey: "#6A6A6A",
     lighttartorange: "#FC4E4E",
     tartorange: "#FC4041",
     green: "#24DD64",
@@ -18,6 +19,8 @@ export const theme = {
     colors: {
         background: palette.lighttartorange,
         foreground: palette.white,
+        primaryText: palette.jet,
+        secondaryText: palette.lightgrey,
         primary: palette.tartorange,
         success: palette.green,
         danger: palette.red,
@@ -33,16 +36,20 @@ export const theme = {
         title: {
             fontFamily: "PoppinsMedium",
             fontSize: 40,
-            color: "#fff",
             textAlign: "center",
         },
-        header: {
-            fontFamily: "Raleway",
-            fontSize: 36,
-            fontWeight: "bold",
+        h1: {
+            fontFamily: "PoppinsMedium",
+            fontSize: 22,
+            margin: 8,
         },
+        h2: {
+            fontFamily: "Poppins",
+            fontSize: 16,
+        },
+        subheading: {},
         body: {
-            fontFamily: "Merriweather",
+            fontFamily: "PoppinsMedium",
             fontSize: 16,
         },
     },

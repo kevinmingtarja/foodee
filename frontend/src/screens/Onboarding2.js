@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, View, Dimensions, Image } from "react-native";
+import { Text } from "../components/Components";
 
 import Wave from "../components/waves/Wave2";
 
@@ -8,7 +9,40 @@ export default function Onboarding2() {
         <View style={styles.container}>
             <Wave customStyles={styles.svgCurve} />
             <View style={styles.headerContainer}>
-                <Text style={styles.headerText}>Custom Header</Text>
+                <Text
+                    variant="title"
+                    color="foreground"
+                    style={{ marginBottom: 30 }}
+                >
+                    Foodee
+                </Text>
+                <Image
+                    source={require("../assets/group.png")}
+                    style={{
+                        width: "100%",
+                        resizeMode: "contain",
+                        height: "65%",
+                    }}
+                />
+                <View style={{ flex: 1, marginTop: 0 }}>
+                    <Text
+                        variant="h1"
+                        color="primaryText"
+                        style={{ textAlign: "center" }}
+                    >
+                        Use It With Friends
+                    </Text>
+                    <Text
+                        variant="h2"
+                        color="secondaryText"
+                        style={{
+                            textAlign: "center",
+                            marginHorizontal: 40,
+                        }}
+                    >
+                        Find The Best Restaurant that is suitable for everyone
+                    </Text>
+                </View>
             </View>
         </View>
     );

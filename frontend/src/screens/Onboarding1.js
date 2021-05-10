@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
+import { StyleSheet, View, Dimensions, Image } from "react-native";
+import { Text } from "../components/Components";
 
 import Wave from "../components/waves/Wave1";
 import { ThemeContext } from "../components/Theme";
@@ -11,7 +12,13 @@ export default function Onboarding1() {
         <View style={styles.container}>
             <Wave customStyles={styles.svgCurve} />
             <View style={styles.headerContainer}>
-                <Text style={theme.textVariants.title}>Foodee</Text>
+                <Text
+                    variant="title"
+                    color="foreground"
+                    style={{ marginBottom: 30 }}
+                >
+                    Foodee
+                </Text>
                 <Image
                     source={require("../assets/food.png")}
                     style={{
@@ -20,10 +27,25 @@ export default function Onboarding1() {
                         height: "65%",
                     }}
                 />
-                <Text>Find The Best Restaurant</Text>
-                <Text>
-                    Find The Best Restaurant that is suitable for everyone
-                </Text>
+                <View style={{ flex: 1, marginTop: 0 }}>
+                    <Text
+                        variant="h1"
+                        color="primaryText"
+                        style={{ textAlign: "center" }}
+                    >
+                        Find The Best Restaurant
+                    </Text>
+                    <Text
+                        variant="h2"
+                        color="secondaryText"
+                        style={{
+                            textAlign: "center",
+                            marginHorizontal: 40,
+                        }}
+                    >
+                        Find The Best Restaurant that is suitable for everyone
+                    </Text>
+                </View>
             </View>
         </View>
     );

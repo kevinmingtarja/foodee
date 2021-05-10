@@ -19,10 +19,6 @@ export default function Pagination({ pageIndex, numOfPages }) {
 
 const styles = StyleSheet.create({
     paginationWrapper: {
-        position: "absolute",
-        bottom: 200,
-        left: 0,
-        right: 0,
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",

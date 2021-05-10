@@ -9,22 +9,28 @@ import {
     TouchableOpacity,
     Touchable,
 } from "react-native";
+import { Button } from "../components/Components";
 
 import Onboarding1 from "./Onboarding1";
 import Onboarding2 from "./Onboarding2";
 import Onboarding3 from "./Onboarding3";
 import Pagination from "../components/Pagination";
 
-export default function Onboarding() {
+export default function OnboardingMain({ navigation }) {
     const [sliderState, setSliderState] = useState({ currentPage: 0 });
     const { width, height } = Dimensions.get("window");
     const scrollRef = useRef();
 
     const onPressNext = (initialX) => {
-        scrollRef.current.scrollTo({
-            x: initialX + width,
-            animated: true,
-        });
+        if (initialX < width * 2) {
+            scrollRef.current.scrollTo({
+                x: initialX + width,
+                animated: true,
+            });
+            return;
+        }
+
+        // navigation.navigate("Last");
     };
 
     const setSliderPage = ({ x }) => {
@@ -41,33 +47,47 @@ export default function Onboarding() {
     const { currentPage: pageIndex } = sliderState;
 
     return (
-        <>
-            <SafeAreaView style={{ flex: 1 }}>
-                <ScrollView
-                    ref={scrollRef}
-                    style={{ flex: 1 }}
-                    horizontal={true}
-                    scrollEventThrottle={16}
-                    pagingEnabled={true}
-                    showsHorizontalScrollIndicator={false}
-                    onScroll={(event) => {
-                        setSliderPage(event.nativeEvent.contentOffset);
-                    }}
-                >
-                    <Onboarding1 />
-                    <Onboarding2 />
-                    <Onboarding3 />
-                </ScrollView>
-                <View style={{ paddingBottom: 100 }}>
-                    <Pagination pageIndex={pageIndex} numOfPages={3} />
-                    <TouchableOpacity
+        <View style={{ flex: 1, backgroundColor: "#fff" }}>
+            <ScrollView
+                ref={scrollRef}
+                style={{ flex: 1 }}
+                horizontal={true}
+                scrollEventThrottle={16}
+                pagingEnabled={true}
+                showsHorizontalScrollIndicator={false}
+                onScroll={(event) => {
+                    setSliderPage(event.nativeEvent.contentOffset);
+                }}
+            >
+                <Onboarding1 />
+                <Onboarding2 />
+                <Onboarding3 />
+            </ScrollView>
+            {pageIndex >= 2 ? (
+                <View style={{ paddingBottom: 120 }}>
+                    <Button
+                        style={{ marginLeft: 50 }}
                         onPress={() => onPressNext(width * pageIndex)}
+                        size="large"
+                        type="filled"
                     >
-                        <Text>Next</Text>
-                    </TouchableOpacity>
+                        Get Started
+                    </Button>
                 </View>
-            </SafeAreaView>
-        </>
+            ) : (
+                <View style={styles.bottom}>
+                    <Pagination pageIndex={pageIndex} numOfPages={3} />
+                    <Button
+                        style={{ marginLeft: 50 }}
+                        onPress={() => onPressNext(width * pageIndex)}
+                        size="small"
+                        type="filled"
+                    >
+                        Next
+                    </Button>
+                </View>
+            )}
+        </View>
     );
 }
 
@@ -84,5 +104,10 @@ const styles = StyleSheet.create({
     },
     paragraph: {
         fontSize: 17,
+    },
+    bottom: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        paddingBottom: 120,
     },
 });

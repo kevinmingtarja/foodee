@@ -1,11 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, SafeAreaView, Dimensions } from "react-native";
+import { StyleSheet, SafeAreaView, Dimensions, View } from "react-native";
 import AppLoading from "expo-app-loading";
 import { useFonts } from "expo-font";
 
 import { theme, darkTheme, ThemeContext } from "./src/components/Theme";
-import Onboarding from "./src/screens/OnboardingMain";
+import RootNavigator from "./src/navigation/Root";
 
 export default function App() {
     // To-Do: Create Dark Mode
@@ -28,7 +28,7 @@ export default function App() {
             <SafeAreaView style={styles.OuterContainer}>
                 <StatusBar style="auto" />
                 <SafeAreaView style={styles.container}>
-                    <Onboarding />
+                    <RootNavigator />
                 </SafeAreaView>
             </SafeAreaView>
         </ThemeContext.Provider>
@@ -43,7 +43,5 @@ const styles = StyleSheet.create({
     container: {
         height: Dimensions.get("window").height,
         backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
     },
 });

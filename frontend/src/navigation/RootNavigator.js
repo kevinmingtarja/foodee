@@ -14,7 +14,11 @@ export default function RootNavigator() {
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name={"Onboarding"} component={OnboardingMain} />
-                <Stack.Screen name={"Landing"} component={Landing} />
+                <Stack.Screen
+                    name={"Landing"}
+                    component={Landing}
+                    options={{ gestureEnabled: false }}
+                />
                 <Stack.Screen name={"Group"} component={Group} />
             </Stack.Navigator>
         </NavigationContainer>

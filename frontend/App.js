@@ -25,12 +25,8 @@ export default function App() {
 
     return (
         <ThemeContext.Provider value={darkMode ? darkTheme : theme}>
-            <SafeAreaView style={styles.OuterContainer}>
-                <StatusBar style="auto" />
-                <SafeAreaView style={styles.container}>
-                    <RootNavigator />
-                </SafeAreaView>
-            </SafeAreaView>
+            <StatusBar style="auto" />
+            <RootNavigator />
         </ThemeContext.Provider>
     );
 }

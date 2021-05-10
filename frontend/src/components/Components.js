@@ -98,18 +98,22 @@ export const Card = ({
     onPress,
     children,
     body,
+    imgHeight,
     ...rest
 }) => {
     const theme = useContext(ThemeContext);
+    const { width, height } = Dimensions.get("window");
 
     return (
         <TouchableOpacity
             onPress={onPress}
             style={{
-                width: 300,
-                height: 200,
+                justifyContent: "center",
+                alignItems: "center",
+                width: 0.75 * width,
+                height: 0.3 * height,
                 backgroundColor: "white",
-                shadowRadius: 8,
+                shadowRadius: 5,
                 shadowOpacity: 0.2,
                 shadowColor: "#757575",
                 shadowOffset: {
@@ -117,14 +121,32 @@ export const Card = ({
                     height: 3,
                 },
                 elevation: 5,
-                borderRadius: 10,
-                padding: 10,
+                borderRadius: 12.5,
+                marginVertical: 40,
+                paddingTop: height * 0.01,
+                paddingHorizontal: width * 0.015,
             }}
         >
-            <Image
-                source={image}
-                style={{ width: 100, height: 100, resizeMode: "contain" }}
-            />
+            <Box
+                backgroundColor="background"
+                style={{
+                    width: "100%",
+                    height: "75%",
+                    borderRadius: 10,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginBottom: 7.5,
+                }}
+            >
+                <Image
+                    source={image}
+                    style={{
+                        width: width,
+                        height: imgHeight,
+                        resizeMode: "contain",
+                    }}
+                />
+            </Box>
             <Text variant="h1" color="primaryText">
                 {children}
             </Text>

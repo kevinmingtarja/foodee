@@ -8,7 +8,8 @@ const palette = {
     blackcoral: "#5D6275",
     manatee: "#8D99AE",
     aliceblue: "#EDF2F4",
-    lightgrey: "#6A6A6A",
+    grey: "#6A6A6A",
+    lightgrey: "#E8E8E8",
     lighttartorange: "#FC4E4E",
     tartorange: "#FC4041",
     green: "#24DD64",
@@ -18,9 +19,10 @@ const palette = {
 export const theme = {
     colors: {
         background: palette.lighttartorange,
+        background2: palette.lightgrey,
         foreground: palette.white,
         primaryText: palette.jet,
-        secondaryText: palette.lightgrey,
+        secondaryText: palette.grey,
         primary: palette.tartorange,
         success: palette.green,
         danger: palette.red,

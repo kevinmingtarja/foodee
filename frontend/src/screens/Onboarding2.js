@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
     },
     headerContainer: {
-        marginTop: 50,
+        marginTop: Dimensions.get("window").height * 0.1,
         marginHorizontal: 10,
     },
     svgCurve: {

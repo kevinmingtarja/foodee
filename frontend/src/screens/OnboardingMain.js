@@ -9,7 +9,7 @@ import {
     TouchableOpacity,
     Touchable,
 } from "react-native";
-import { Button } from "../components/Components";
+import { Button, Box } from "../components/Components";
 
 import Onboarding1 from "./Onboarding1";
 import Onboarding2 from "./Onboarding2";
@@ -33,6 +33,14 @@ export default function OnboardingMain({ navigation }) {
         // navigation.navigate("Last");
     };
 
+    const onGetStarted = () => {
+        navigation.navigate("Landing");
+        // navigation.reset({
+        //     index: 0,
+        //     routes: [{ name: "Profile" }],
+        // });
+    };
+
     const setSliderPage = ({ x }) => {
         const { currentPage } = sliderState;
         const indexOfNextScreen = Math.floor(x / width);
@@ -47,7 +55,7 @@ export default function OnboardingMain({ navigation }) {
     const { currentPage: pageIndex } = sliderState;
 
     return (
-        <View style={{ flex: 1, backgroundColor: "#fff" }}>
+        <Box style={{ flex: 1 }} backgroundColor="foreground">
             <ScrollView
                 ref={scrollRef}
                 style={{ flex: 1 }}
@@ -64,10 +72,10 @@ export default function OnboardingMain({ navigation }) {
                 <Onboarding3 />
             </ScrollView>
             {pageIndex >= 2 ? (
-                <View style={{ paddingBottom: 120 }}>
+                <View style={{ paddingBottom: 100 }}>
                     <Button
                         style={{ marginLeft: 50 }}
-                        onPress={() => onPressNext(width * pageIndex)}
+                        onPress={() => onGetStarted()}
                         size="large"
                         type="filled"
                     >
@@ -87,7 +95,7 @@ export default function OnboardingMain({ navigation }) {
                     </Button>
                 </View>
             )}
-        </View>
+        </Box>
     );
 }
 
@@ -108,6 +116,6 @@ const styles = StyleSheet.create({
     bottom: {
         flexDirection: "row",
         justifyContent: "space-around",
-        paddingBottom: 120,
+        paddingBottom: 100,
     },
 });

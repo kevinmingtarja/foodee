@@ -31,7 +31,7 @@ export default function Onboarding3() {
                         color="primaryText"
                         style={{ textAlign: "center" }}
                     >
-                        Placeholder
+                        Tinder But For Food
                     </Text>
                     <Text
                         variant="h2"
@@ -41,8 +41,8 @@ export default function Onboarding3() {
                             marginHorizontal: 40,
                         }}
                     >
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit.
+                        Swipe left if you like a restaurant, swipe right if you
+                        don't
                     </Text>
                 </View>
             </View>
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
     },
     headerContainer: {
-        marginTop: 50,
+        marginTop: Dimensions.get("window").height * 0.1,
         marginHorizontal: 10,
     },
     svgCurve: {

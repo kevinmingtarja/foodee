@@ -16,6 +16,18 @@ const palette = {
     red: "#24DD64",
 };
 
+export type colorsType =
+    | "background"
+    | "background2"
+    | "foreground"
+    | "primaryText"
+    | "secondaryText"
+    | "primary"
+    | "success"
+    | "danger"
+    | "failure"
+    | "darkerforeground";
+
 export const theme = {
     colors: {
         background: palette.lighttartorange,
@@ -62,9 +74,55 @@ export const darkTheme = {
     ...theme,
     colors: {
         ...theme.colors,
-        background: palette.black,
+        // background: palette.black,
         foreground: palette.white,
     },
 };
 
-export const ThemeContext = React.createContext({});
+export type spacingsType = "s" | "m" | "l" | "xl";
+
+export type textVariantsType = "title" | "h1" | "h2" | "subheading" | "body";
+
+export interface themeType {
+    colors: {
+        background: string;
+        background2: string;
+        foreground: string;
+        primaryText: string;
+        secondaryText: string;
+        primary: string;
+        success: string;
+        danger: string;
+        failure: string;
+        darkerforeground: string;
+    };
+    spacing: {
+        s: number;
+        m: number;
+        l: number;
+        xl: number;
+    };
+    textVariants: {
+        title: {
+            fontFamily: string;
+            fontSize: number;
+            textAlign: string;
+        };
+        h1: {
+            fontFamily: string;
+            fontSize: number;
+            margin: number;
+        };
+        h2: {
+            fontFamily: string;
+            fontSize: number;
+        };
+        subheading: {};
+        body: {
+            fontFamily: string;
+            fontSize: number;
+        };
+    };
+}
+
+export const ThemeContext = React.createContext<themeType>({} as themeType);

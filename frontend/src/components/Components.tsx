@@ -7,6 +7,7 @@ import {
     Image,
     ViewStyle,
     ImageSourcePropType,
+    TextStyle,
 } from "react-native";
 
 import {
@@ -30,8 +31,8 @@ export interface BoxProps {
 export const Box = ({
     style,
     children,
-    padding = "s", // Default Arguments
-    margin = "s",
+    padding, // Default Arguments
+    margin,
     backgroundColor,
     ...rest
 }: BoxProps): JSX.Element => {
@@ -41,8 +42,8 @@ export const Box = ({
         <View
             style={
                 {
-                    margin: theme.spacing[margin],
-                    padding: theme.spacing[padding],
+                    margin: margin ? theme.spacing[margin] : 0,
+                    padding: padding ? theme.spacing[padding] : 0,
                     backgroundColor: theme.colors[backgroundColor],
                     ...style,
                 } as ViewStyle
@@ -56,7 +57,7 @@ export const Box = ({
 
 export interface TextProps {
     children: React.ReactNode;
-    style?: React.CSSProperties;
+    style?: TextStyle;
     variant: textVariantsType;
     color: colorsType;
     rest?: string[];
@@ -89,7 +90,7 @@ export const Text = ({
 
 export interface ButtonProps {
     style: React.CSSProperties;
-    color: colorsType;
+    color?: colorsType;
     onPress: () => void;
     type: "filled" | "outlined";
     size: "small" | "large";
@@ -150,12 +151,12 @@ export const Button = ({
 };
 
 export interface Card {
-    style: React.CSSProperties;
-    color: colorsType;
+    style?: React.CSSProperties;
+    color?: colorsType;
     image: ImageSourcePropType;
     onPress: () => void;
     children: React.ReactNode;
-    body: string;
+    body?: string;
     imgHeight: number;
     rest?: string[];
 }

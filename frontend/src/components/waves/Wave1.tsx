@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { View, Dimensions } from "react-native";
+import { View, Dimensions, ViewStyle } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
 import { ThemeContext } from "../Theme";
@@ -23,7 +23,11 @@ import { ThemeContext } from "../Theme";
 </svg>; */
 }
 
-export default function Wave1({ customStyles }) {
+export default function Wave1({
+    customStyles,
+}: {
+    customStyles: ViewStyle;
+}): JSX.Element {
     const theme = useContext(ThemeContext);
     const width = Dimensions.get("window").width;
     const ratio = width / 375;

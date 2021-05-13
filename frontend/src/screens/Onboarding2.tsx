@@ -4,7 +4,7 @@ import { Text } from "../components/Components";
 
 import Wave from "../components/waves/Wave2";
 
-export default function Onboarding2() {
+export default function Onboarding2(): JSX.Element {
     return (
         <View style={styles.container}>
             <Wave customStyles={styles.svgCurve} />

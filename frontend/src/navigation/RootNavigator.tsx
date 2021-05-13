@@ -7,7 +7,13 @@ import OnboardingMain from "../screens/OnboardingMain";
 import Landing from "../screens/Landing";
 import Group from "../screens/Group";
 
-const Stack = createStackNavigator();
+export type RootNavigatorParamList = {
+    Onboarding: undefined;
+    Landing: undefined;
+    Group: undefined;
+};
+
+const Stack = createStackNavigator<RootNavigatorParamList>();
 
 export default function RootNavigator() {
     return (

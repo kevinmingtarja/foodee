@@ -1,7 +1,15 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-export default function Pagination({ pageIndex, numOfPages }) {
+interface props {
+    pageIndex: number;
+    numOfPages: number;
+}
+
+export default function Pagination({
+    pageIndex,
+    numOfPages,
+}: props): JSX.Element {
     return (
         <View style={styles.paginationWrapper}>
             {Array.from(Array(numOfPages).keys()).map((key, index) => (

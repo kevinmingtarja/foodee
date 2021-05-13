@@ -5,7 +5,7 @@ import { Button } from "../components/Components";
 
 import Wave from "../components/waves/Wave3";
 
-export default function Onboarding3() {
+export default function Onboarding3(): JSX.Element {
     return (
         <View style={styles.container}>
             <Wave customStyles={styles.svgCurve} />

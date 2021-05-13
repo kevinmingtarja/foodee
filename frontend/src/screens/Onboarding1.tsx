@@ -5,7 +5,7 @@ import { Text } from "../components/Components";
 import Wave from "../components/waves/Wave1";
 import { ThemeContext } from "../components/Theme";
 
-export default function Onboarding1() {
+export default function Onboarding1(): JSX.Element {
     const theme = useContext(ThemeContext);
 
     return (

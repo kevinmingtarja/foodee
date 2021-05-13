@@ -5,40 +5,97 @@ import {
     TouchableOpacity,
     Dimensions,
     Image,
+    ViewStyle,
+    ImageSourcePropType,
+    TextStyle,
 } from "react-native";
 
-import { ThemeContext } from "./Theme";
+import {
+    ThemeContext,
+    themeType,
+    colorsType,
+    spacingsType,
+    textVariantsType,
+} from "./Theme";
 
-export const Box = ({ style, padding, margin, backgroundColor, ...rest }) => {
+export interface BoxProps {
+    /** CSS Styles */
+    style: React.CSSProperties;
+    padding?: spacingsType;
+    children: React.ReactNode;
+    margin?: spacingsType;
+    backgroundColor: colorsType;
+    rest?: string[];
+}
+
+export const Box = ({
+    style,
+    children,
+    padding, // Default Arguments
+    margin,
+    backgroundColor,
+    ...rest
+}: BoxProps): JSX.Element => {
     const theme = useContext(ThemeContext);
 
     return (
         <View
-            style={{
-                margin: theme.spacing[margin],
-                padding: theme.spacing[padding],
-                backgroundColor: theme.colors[backgroundColor],
-                ...style,
-            }}
+            style={
+                {
+                    margin: margin ? theme.spacing[margin] : 0,
+                    padding: padding ? theme.spacing[padding] : 0,
+                    backgroundColor: theme.colors[backgroundColor],
+                    ...style,
+                } as ViewStyle
+            }
             {...rest}
-        />
+        >
+            {children}
+        </View>
     );
 };
 
-export const Text = ({ style, variant, color, ...rest }) => {
+export interface TextProps {
+    children: React.ReactNode;
+    style?: TextStyle;
+    variant: textVariantsType;
+    color: colorsType;
+    rest?: string[];
+}
+
+export const Text = ({
+    children,
+    style,
+    variant,
+    color,
+    ...rest
+}: TextProps): JSX.Element => {
     const theme = useContext(ThemeContext);
 
     return (
         <RNText
-            style={{
-                color: theme.colors[color],
-                ...theme.textVariants[variant],
-                ...style,
-            }}
+            style={
+                {
+                    color: theme.colors[color],
+                    ...theme.textVariants[variant],
+                    ...style,
+                } as ViewStyle
+            }
             {...rest}
-        />
+        >
+            {children}
+        </RNText>
     );
 };
+
+export interface ButtonProps {
+    style: React.CSSProperties;
+    color?: colorsType;
+    onPress: () => void;
+    type: "filled" | "outlined";
+    size: "small" | "large";
+    children: React.ReactNode;
+}
 
 const width = Dimensions.get("window").width;
 
@@ -50,7 +107,7 @@ export const Button = ({
     size,
     children,
     ...rest
-}) => {
+}: ButtonProps): JSX.Element => {
     const theme = useContext(ThemeContext);
 
     const btnSize = size === "large" ? width / 1.3 : width / 3;
@@ -67,14 +124,16 @@ export const Button = ({
     return (
         <TouchableOpacity onPress={onPress}>
             <View
-                style={{
-                    paddingVertical: 14,
-                    borderRadius: 8,
-                    backgroundColor: btnBgColor,
-                    width: btnSize,
-                    ...border,
-                    ...style,
-                }}
+                style={
+                    {
+                        paddingVertical: 14,
+                        borderRadius: 8,
+                        backgroundColor: btnBgColor,
+                        width: btnSize,
+                        ...border,
+                        ...style,
+                    } as ViewStyle
+                }
             >
                 <RNText
                     style={{
@@ -91,6 +150,17 @@ export const Button = ({
     );
 };
 
+export interface Card {
+    style?: React.CSSProperties;
+    color?: colorsType;
+    image: ImageSourcePropType;
+    onPress: () => void;
+    children: React.ReactNode;
+    body?: string;
+    imgHeight: number;
+    rest?: string[];
+}
+
 export const Card = ({
     style,
     color,
@@ -100,7 +170,7 @@ export const Card = ({
     body,
     imgHeight,
     ...rest
-}) => {
+}: Card): JSX.Element => {
     const theme = useContext(ThemeContext);
     const { width, height } = Dimensions.get("window");
 

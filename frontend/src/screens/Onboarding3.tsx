@@ -1,13 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { StyleSheet, View, Dimensions, Image } from "react-native";
 import { Text } from "../components/Components";
+import { Button } from "../components/Components";
 
-import Wave from "../components/waves/Wave1";
-import { ThemeContext } from "../components/Theme";
+import Wave from "../components/waves/Wave3";
 
-export default function Onboarding1() {
-    const theme = useContext(ThemeContext);
-
+export default function Onboarding3(): JSX.Element {
     return (
         <View style={styles.container}>
             <Wave customStyles={styles.svgCurve} />
@@ -20,7 +18,7 @@ export default function Onboarding1() {
                     Foodee
                 </Text>
                 <Image
-                    source={require("../assets/food.png")}
+                    source={require("../assets/group.png")}
                     style={{
                         width: "100%",
                         resizeMode: "contain",
@@ -33,7 +31,7 @@ export default function Onboarding1() {
                         color="primaryText"
                         style={{ textAlign: "center" }}
                     >
-                        Find The Best Restaurant
+                        Tinder But For Food
                     </Text>
                     <Text
                         variant="h2"
@@ -43,10 +41,21 @@ export default function Onboarding1() {
                             marginHorizontal: 40,
                         }}
                     >
-                        Find The Best Restaurant that is suitable for everyone
+                        Swipe left if you like a restaurant, swipe right if you
+                        don't
                     </Text>
                 </View>
             </View>
+            {/* <View style={{ paddingTop: 30 }}>
+                <Button
+                    style={{ marginLeft: 50 }}
+                    onPress={() => onPressNext(width * pageIndex)}
+                    size="large"
+                    type="filled"
+                >
+                    Get Started
+                </Button>
+            </View> */}
         </View>
     );
 }
@@ -56,6 +65,7 @@ const styles = StyleSheet.create({
         width: Dimensions.get("window").width,
         height: Dimensions.get("window").height,
         flex: 1,
+        backgroundColor: "#fff",
     },
     headerContainer: {
         marginTop: Dimensions.get("window").height * 0.1,
@@ -64,5 +74,13 @@ const styles = StyleSheet.create({
     svgCurve: {
         position: "absolute",
         width: Dimensions.get("window").width,
+    },
+    headerText: {
+        fontSize: 30,
+        fontWeight: "bold",
+        // change the color property for better output
+        color: "black",
+        textAlign: "center",
+        marginTop: 35,
     },
 });

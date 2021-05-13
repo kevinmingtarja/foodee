@@ -10,24 +10,37 @@ import {
     Touchable,
 } from "react-native";
 import { Button, Box } from "../components/Components";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootNavigatorParamList } from "../navigation/RootNavigator";
 
 import Onboarding1 from "./Onboarding1";
 import Onboarding2 from "./Onboarding2";
 import Onboarding3 from "./Onboarding3";
 import Pagination from "../components/Pagination";
 
-export default function OnboardingMain({ navigation }) {
+type LandingScreenNavigationProp = StackNavigationProp<
+    RootNavigatorParamList,
+    "Onboarding"
+>;
+
+interface props {
+    navigation: LandingScreenNavigationProp;
+}
+
+export default function OnboardingMain({ navigation }: props): JSX.Element {
     const [sliderState, setSliderState] = useState({ currentPage: 0 });
     const { width, height } = Dimensions.get("window");
-    const scrollRef = useRef();
+    const scrollRef = useRef<ScrollView>(null);
 
-    const onPressNext = (initialX) => {
+    const onPressNext = (initialX: number) => {
         if (initialX < width * 2) {
-            scrollRef.current.scrollTo({
-                x: initialX + width,
-                animated: true,
-            });
-            return;
+            // Strict null checks Typescript
+            if (scrollRef && scrollRef.current) {
+                scrollRef.current.scrollTo({
+                    x: initialX + width,
+                    animated: true,
+                });
+            }
         }
 
         // navigation.navigate("Last");
@@ -41,7 +54,7 @@ export default function OnboardingMain({ navigation }) {
         // });
     };
 
-    const setSliderPage = ({ x }) => {
+    const setSliderPage = ({ x }: { x: number }) => {
         const { currentPage } = sliderState;
         const indexOfNextScreen = Math.floor(x / width);
         if (indexOfNextScreen !== currentPage) {

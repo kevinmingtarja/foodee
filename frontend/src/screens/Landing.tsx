@@ -2,8 +2,19 @@ import React, { useEffect } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Card } from "../components/Components";
 import { Box } from "../components/Components";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootNavigatorParamList } from "../navigation/RootNavigator";
 
-const Landing = ({ navigation }) => {
+type LandingScreenNavigationProp = StackNavigationProp<
+    RootNavigatorParamList,
+    "Landing"
+>;
+
+interface props {
+    navigation: LandingScreenNavigationProp;
+}
+
+const Landing = ({ navigation }: props): JSX.Element => {
     return (
         <Box
             backgroundColor="background2"

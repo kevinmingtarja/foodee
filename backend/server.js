@@ -1,17 +1,142 @@
-require('dotenv').config();
-
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
+const { pool } = require('./dbConfig');
+const session = require('express-session');
+const flash = require('express-flash');
+const passport = require('passport');
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
-const db = mongoose.connection;
-db.on('error', (error) => console.error(error));
-db.once('open', () => console.log('Connected to Database'));
+const initializePassport = require('./passportConfig');
 
-app.use(express.json());
+initializePassport(passport);
 
-const foodeeRouter = require('./routes/foodee');
-app.use('/foodee', foodeeRouter);
+const PORT = process.env.PORT || 3000;
 
-app.listen(3000, () => console.log('Server running!'));
+app.set('view engine', 'ejs');
+app.use(express.urlencoded({extended: false}));
+
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(flash());
+
+app.get('/', (req, res) => {
+    res.render('index');
+});
+
+app.get('/users/register', checkAuthenticated, (req, res) => {
+    res.render('register');
+})
+
+app.get('/users/login', checkAuthenticated, (req, res) => {
+    res.render('login');
+})
+
+app.get('/users/dashboard', checkNotAuthenticated, (req, res) => {
+    console.log(req);
+    res.render('dashboard', { user: req.user.name });
+})
+
+app.get('/users/logout', (req, res) => {
+    req.logout();
+    req.flash('success_msg', 'You have logout!');
+    res.redirect('/users/login')
+})
+
+app.post('/users/register', (req, res) => {
+    let { name, username } = req.body;
+    
+    console.log({
+        name,
+        username
+    });
+
+    let errors = [];
+
+    if (!name || !username) {
+        errors.push({ message: "Please enter all fields" });
+    }
+
+    if(errors.length > 0) {
+        res.render("register", { errors });
+    } else {
+        //Form validation has passed
+
+        pool.query(
+            `SELECT * FROM users
+            WHERE username = $1`, [username], (err, results) => {
+                if (err) {
+                    throw err
+                }
+
+                console.log(results.rows);
+
+                if (results.rows.length > 0) {
+                    errors.push({ message: "Username is already taken!" });
+                    res.render('register', { errors });
+                } else {
+                    pool.query(
+                        `INSERT INTO users (name, username)
+                        VALUES ($1, $2)
+                        RETURNING id, username`, [name, username], (err, results) => {
+                            if (err) {
+                                throw err;
+                            }
+                            console.log(results.rows);
+                            req.flash('success_msg', 'You are now registered. Please login!');
+                            res.redirect('/users/login');
+                        }
+                    )
+                }
+            } 
+        )
+
+    }
+})
+
+/app.post('/users/login', passport.authenticate('local', {
+    successRedirect: '/users/dashboard',
+    failureRedirect: '/users/login',
+    failureFlash: true
+}))
+
+app.post('/users/login', (req, res) => {
+    let { username } = req.body;
+    pool.query(
+        `SELECT * FROM users
+        WHERE username = $1`, [username], (err, results) => {
+            if (err) {
+                throw err;
+            } else if (results.rows.length > 0) {
+                req.session.username = username;
+                res.redirect('/users/dashboard');
+            } else {
+                req.flash('error', 'Username has not been registered');
+                res.redirect('/users/login');
+            }
+        }
+    )
+})
+
+function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return res.redirect('/users/dashboard');
+    }
+    next();
+}
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/users/login');
+}
+
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+})

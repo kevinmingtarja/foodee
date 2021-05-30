@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: false}));
+app.use(express.json());
 
 app.use(session({
     secret: 'secret',
@@ -95,7 +96,7 @@ app.post('/users/register', async (req, res) => {
                     pool.query(
                         `INSERT INTO users (name, username, password)
                         VALUES ($1, $2, $3)
-                        RETURNING id, password`, [name, username, hashedPassword], (err, results) => {
+                        RETURNING user_id, password`, [name, username, hashedPassword], (err, results) => {
                             if (err) {
                                 throw err;
                             }

@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "strict": true,
+
+        "baseUrl": "./src",
+        "typeRoots": ["./node_modules/@types", "./src/types"],
+        "paths": {
+            "@api/*": ["api/*"],
+            "@assets/*": ["assets/*"],
+            "@components/*": ["components/*"],
+            "@constants/*": ["constants/*"],
+            "@containers/*": ["containers/*"],
+            "@copy/*": ["copy/*"],
+            "@hooks/*": ["hooks/*"],
+            "@screens/*": ["screens/*"],
+            "@types/*": ["types/*"],
+            "@utils/*": ["utils/*"]
+        }
+    },
+    "extends": "expo/tsconfig.base"
+}

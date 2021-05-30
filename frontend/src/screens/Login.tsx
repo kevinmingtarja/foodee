@@ -53,7 +53,9 @@ const Login = ({ navigation }: Props): JSX.Element => {
             username: username,
             password: password,
         });
-        saveToken(token);
+        console.log(typeof token.token);
+        console.log(token.token)
+        saveToken(token.token);
         saveUsername(username);
         navigation.navigate("Landing");
     };

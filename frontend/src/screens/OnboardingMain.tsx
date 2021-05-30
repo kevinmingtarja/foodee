@@ -47,7 +47,7 @@ export default function OnboardingMain({ navigation }: Props): JSX.Element {
     };
 
     const onGetStarted = () => {
-        navigation.navigate("Landing");
+        navigation.navigate("Login");
         // navigation.reset({
         //     index: 0,
         //     routes: [{ name: "Profile" }],

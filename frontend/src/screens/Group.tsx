@@ -8,11 +8,11 @@ type LandingScreenNavigationProp = StackNavigationProp<
     "Group"
 >;
 
-interface props {
+interface Props {
     navigation: LandingScreenNavigationProp;
 }
 
-const Group = ({ navigation }: props): JSX.Element => {
+const Group = ({ navigation }: Props): JSX.Element => {
     return (
         <View>
             <Text>Group Screen</Text>

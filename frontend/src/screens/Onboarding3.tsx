@@ -31,7 +31,7 @@ export default function Onboarding3(): JSX.Element {
                         color="primaryText"
                         style={{ textAlign: "center" }}
                     >
-                        Tinder But For Food
+                        The Quickest Way to Find Restaurants
                     </Text>
                     <Text
                         variant="h2"
@@ -41,8 +41,7 @@ export default function Onboarding3(): JSX.Element {
                             marginHorizontal: 40,
                         }}
                     >
-                        Swipe left if you like a restaurant, swipe right if you
-                        don't
+                        Deciding where to eat has never been this easy
                     </Text>
                 </View>
             </View>

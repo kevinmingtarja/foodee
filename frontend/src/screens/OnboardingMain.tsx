@@ -23,11 +23,11 @@ type LandingScreenNavigationProp = StackNavigationProp<
     "Onboarding"
 >;
 
-interface props {
+interface Props {
     navigation: LandingScreenNavigationProp;
 }
 
-export default function OnboardingMain({ navigation }: props): JSX.Element {
+export default function OnboardingMain({ navigation }: Props): JSX.Element {
     const [sliderState, setSliderState] = useState({ currentPage: 0 });
     const { width, height } = Dimensions.get("window");
     const scrollRef = useRef<ScrollView>(null);
@@ -85,7 +85,7 @@ export default function OnboardingMain({ navigation }: props): JSX.Element {
                 <Onboarding3 />
             </ScrollView>
             {pageIndex >= 2 ? (
-                <View style={{ paddingBottom: 100 }}>
+                <View style={{ paddingBottom: 90 }}>
                     <Button
                         style={{ marginLeft: 50 }}
                         onPress={() => onGetStarted()}
@@ -129,6 +129,6 @@ const styles = StyleSheet.create({
     bottom: {
         flexDirection: "row",
         justifyContent: "space-around",
-        paddingBottom: 100,
+        paddingBottom: 90,
     },
 });

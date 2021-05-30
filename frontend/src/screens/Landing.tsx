@@ -10,11 +10,11 @@ type LandingScreenNavigationProp = StackNavigationProp<
     "Landing"
 >;
 
-interface props {
+interface Props {
     navigation: LandingScreenNavigationProp;
 }
 
-const Landing = ({ navigation }: props): JSX.Element => {
+const Landing = ({ navigation }: Props): JSX.Element => {
     return (
         <Box
             backgroundColor="background2"

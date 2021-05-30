@@ -1,5 +1,6 @@
 const localStrategy = require('passport-local').Strategy;
 const { pool } = require('./dbConfig');
+const bcrypt = require("bcrypt");
 
 function initialize(passport) {
     const authenticateUser = (username, password, done) => {
@@ -11,17 +12,30 @@ function initialize(passport) {
                     console.log(results.row);
                     if (results.rows.length > 0) {
                         const user = results.rows[0];
-                        return done(null, user);
-                    } else {
-                        return done(null, false, { message: 'Username is not registered' });
-                    }
+                        bcrypt.compare(password, user.password, (err, isMatch) => {
+                          if (err) {
+                            console.log(err);
+                          }
+                          if (isMatch) {
+                            return done(null, user);
+                          } else {
+                            //password is incorrect
+                            return done(null, false, { message: "Password is incorrect" });
+                          }
+                        });
+                      } else {
+                        // No user with that username address
+                        return done(null, false, {
+                          message: "Username address is not registered!"
+                        });
+                      }
                 }
             }
         )
     }
     passport.use(new localStrategy({
         usernameField: 'username',
-        passwordField: 'username'
+        passwordField: 'password'
     }, authenticateUser))
 
     passport.serializeUser((user, done) => done(null, user.id));

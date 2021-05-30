@@ -4,6 +4,7 @@ const { pool } = require('./dbConfig');
 const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('passport');
+const bcrypt = require("bcrypt");
 
 const initializePassport = require('./passportConfig');
 
@@ -48,23 +49,34 @@ app.get('/users/logout', (req, res) => {
     res.redirect('/users/login')
 })
 
-app.post('/users/register', (req, res) => {
-    let { name, username } = req.body;
+app.post('/users/register', async (req, res) => {
+    let { name, username, password, password2 } = req.body;
     
     console.log({
         name,
-        username
+        username,
+        password,
+        password2
     });
 
     let errors = [];
 
-    if (!name || !username) {
+    if (!name || !username || !password || !password2) {
         errors.push({ message: "Please enter all fields" });
+    }
+
+    if (password.length < 6) {
+        errors.push({ message: "Password must be a least 6 characters long" });
+    }
+    
+    if (password !== password2) {
+        errors.push({ message: "Passwords do not match" });
     }
 
     if(errors.length > 0) {
         res.render("register", { errors });
     } else {
+        hashedPassword = await bcrypt.hash(password, 10);
         //Form validation has passed
 
         pool.query(
@@ -81,9 +93,9 @@ app.post('/users/register', (req, res) => {
                     res.render('register', { errors });
                 } else {
                     pool.query(
-                        `INSERT INTO users (name, username)
-                        VALUES ($1, $2)
-                        RETURNING id, username`, [name, username], (err, results) => {
+                        `INSERT INTO users (name, username, password)
+                        VALUES ($1, $2, $3)
+                        RETURNING id, password`, [name, username, hashedPassword], (err, results) => {
                             if (err) {
                                 throw err;
                             }
@@ -106,7 +118,7 @@ app.post('/users/register', (req, res) => {
 }))
 
 app.post('/users/login', (req, res) => {
-    let { username } = req.body;
+    let { username}  = req.body;
     pool.query(
         `SELECT * FROM users
         WHERE username = $1`, [username], (err, results) => {

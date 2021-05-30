@@ -4,7 +4,10 @@ const { pool } = require('./dbConfig');
 const session = require('express-session');
 const flash = require('express-flash');
 const passport = require('passport');
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcrypt');
+const yelp = require('yelp-fusion');
+const apiKey = process.env.API_KEY;
+const client = yelp.client(apiKey);
 
 const initializePassport = require('./passportConfig');
 
@@ -112,14 +115,14 @@ app.post('/users/register', async (req, res) => {
     }
 })
 
-/app.post('/users/login', passport.authenticate('local', {
+app.post('/users/login', passport.authenticate('local', {
     successRedirect: '/users/dashboard',
     failureRedirect: '/users/login',
     failureFlash: true
 }))
 
 app.post('/users/login', (req, res) => {
-    let { username}  = req.body;
+    let { username }  = req.body;
     pool.query(
         `SELECT * FROM users
         WHERE username = $1`, [username], (err, results) => {
@@ -134,6 +137,17 @@ app.post('/users/login', (req, res) => {
             }
         }
     )
+})
+
+app.get('/users/dashboard/restaurants', async (req, res) => {
+    try {
+        console.log(req.query);
+        let results = await client.search(req.query);
+        results = results.jsonBody.businesses;
+        res.send(results);
+    } catch (error) {
+        console.log(error);
+    }
 })
 
 function checkAuthenticated(req, res, next) {

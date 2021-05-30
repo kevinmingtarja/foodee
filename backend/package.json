@@ -17,7 +17,8 @@
     "express-session": "^1.17.1",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "pg": "^8.6.0"
+    "pg": "^8.6.0",
+    "yelp-fusion": "^3.0.0"
   },
   "devDependencies": {
     "dotenv": "^9.0.2",

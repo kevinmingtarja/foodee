@@ -33,7 +33,7 @@ export default function Onboarding1(): JSX.Element {
                         color="primaryText"
                         style={{ textAlign: "center" }}
                     >
-                        Find The Best Restaurant
+                        The Quickest Way to Find Restaurants
                     </Text>
                     <Text
                         variant="h2"
@@ -43,7 +43,7 @@ export default function Onboarding1(): JSX.Element {
                             marginHorizontal: 40,
                         }}
                     >
-                        Find The Best Restaurant that is suitable for everyone
+                        Deciding on where to eat has never been easier
                     </Text>
                 </View>
             </View>

@@ -1,3 +1,4 @@
+import { ViewStyleProp } from "@types/styleProp";
 import React, { useContext } from "react";
 import {
     View,
@@ -10,16 +11,10 @@ import {
     TextStyle,
 } from "react-native";
 
-import {
-    ThemeContext,
-    themeType,
-    colorsType,
-    spacingsType,
-    textVariantsType,
-} from "../Theme";
+import { ThemeContext, colorsType } from "../Theme";
 
 export interface ButtonProps {
-    style: React.CSSProperties;
+    styles?: ViewStyleProp;
     color?: colorsType;
     onPress: () => void;
     type: "filled" | "outlined";
@@ -30,7 +25,7 @@ export interface ButtonProps {
 const width = Dimensions.get("window").width;
 
 export const Button = ({
-    style,
+    styles,
     color,
     onPress,
     type,
@@ -55,14 +50,16 @@ export const Button = ({
         <TouchableOpacity onPress={onPress}>
             <View
                 style={
-                    {
-                        paddingVertical: 14,
-                        borderRadius: 8,
-                        backgroundColor: btnBgColor,
-                        width: btnSize,
-                        ...border,
-                        ...style,
-                    } as ViewStyle
+                    [
+                        {
+                            paddingVertical: 14,
+                            borderRadius: 8,
+                            backgroundColor: btnBgColor,
+                            width: btnSize,
+                            ...border,
+                        },
+                        styles,
+                    ] as ViewStyle
                 }
             >
                 <RNText

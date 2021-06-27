@@ -56,7 +56,6 @@ export const theme = {
         h1: {
             fontFamily: "PoppinsMedium",
             fontSize: 22,
-            margin: 8,
         },
         h2: {
             fontFamily: "Poppins",
@@ -111,7 +110,6 @@ export interface themeType {
         h1: {
             fontFamily: string;
             fontSize: number;
-            margin: number;
         };
         h2: {
             fontFamily: string;

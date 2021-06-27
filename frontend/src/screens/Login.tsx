@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, ActivityIndicator, View } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootNavigatorParamList } from "../navigation/RootNavigator";
 
@@ -8,7 +8,7 @@ import { BodyText, Heading } from "@components/Typography";
 import { Button } from "@components/Button";
 import { Color } from "@components/Color";
 import { login } from "@api/auth";
-import { saveToken, saveUsername } from "@utils/auth";
+import { saveToken, saveUsername, saveUserID } from "@utils/auth";
 
 type LandingScreenNavigationProp = StackNavigationProp<
     RootNavigatorParamList,
@@ -22,6 +22,7 @@ interface Props {
 const Login = ({ navigation }: Props): JSX.Element => {
     const [username, setUsername] = useState<string>("");
     const [usernameError, setUsernameError] = useState<string>("");
+    const [loading, setLoading] = useState(false);
 
     const [password, setPassword] = useState<string>("");
     const [passwordError, setPasswordError] = useState<string>("");
@@ -49,15 +50,27 @@ const Login = ({ navigation }: Props): JSX.Element => {
     };
 
     const handleLogin = async () => {
-        const { data: token } = await login({
-            username: username,
-            password: password,
-        });
-        console.log(typeof token.token);
-        console.log(token.token)
-        saveToken(token.token);
-        saveUsername(username);
-        navigation.navigate("Landing");
+        setLoading(true);
+        onBlurUsername();
+        onBlurPassword();
+        try {
+            if (username === "" || password === "") {
+                throw new Error();
+            }
+            const { data } = await login({
+                username: username,
+                password: password,
+            });
+
+            saveToken(data.token);
+            saveUsername(username);
+            saveUserID(data.user_id);
+            setLoading(false);
+            navigation.navigate("Landing");
+        } catch (e) {
+            console.log(e);
+            setLoading(false);
+        }
     };
 
     return (
@@ -76,6 +89,8 @@ const Login = ({ navigation }: Props): JSX.Element => {
                 </Heading>
                 <Input
                     label=""
+                    autoCorrect={false}
+                    autoCapitalize="none"
                     placeholder="Username"
                     style={styles.input}
                     value={username}
@@ -96,10 +111,14 @@ const Login = ({ navigation }: Props): JSX.Element => {
                 <Button
                     size="large"
                     type="filled"
-                    style={{ width: "100%", marginTop: 24 }}
+                    styles={{
+                        width: "100%",
+                        marginTop: 24,
+                        alignItems: "center",
+                    }}
                     onPress={handleLogin}
                 >
-                    {"Log In"}
+                    {loading ? <ActivityIndicator color="white" /> : "Log In"}
                 </Button>
             </View>
 

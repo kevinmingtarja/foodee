@@ -68,7 +68,7 @@ const Register = ({ navigation }: Props): JSX.Element => {
             username: username,
             password: password,
         });
-        saveToken(token);
+        saveToken(token.token);
         saveUsername(username);
         navigation.navigate("Landing");
     };

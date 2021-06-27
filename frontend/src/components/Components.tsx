@@ -20,7 +20,7 @@ import {
 
 export interface BoxProps {
     /** CSS Styles */
-    style: React.CSSProperties;
+    style?: React.CSSProperties;
     padding?: spacingsType;
     children: React.ReactNode;
     margin?: spacingsType;
@@ -75,11 +75,13 @@ export const Text = ({
     return (
         <RNText
             style={
-                {
-                    color: theme.colors[color],
-                    ...theme.textVariants[variant],
-                    ...style,
-                } as ViewStyle
+                [
+                    {
+                        color: theme.colors[color],
+                        ...theme.textVariants[variant],
+                    },
+                    style,
+                ] as ViewStyle
             }
             {...rest}
         >

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const request = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: "https://foodee-orbital.herokuapp.com",
 });
 
 export default request;

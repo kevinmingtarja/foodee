@@ -9,6 +9,10 @@ import Group from "@screens/Group";
 import Matching from "@screens/Matching";
 import Login from "@screens/Login";
 import Register from "@screens/Register";
+import CreateRoom from "@screens/CreateRoom";
+import ShareCode from "@screens/ShareCode";
+import JoinRoom from "@screens/JoinRoom";
+import Results from "@screens/Results";
 
 export type RootNavigatorParamList = {
     Onboarding: undefined;
@@ -17,6 +21,10 @@ export type RootNavigatorParamList = {
     Matching: undefined;
     Login: undefined;
     Register: undefined;
+    CreateRoom: undefined;
+    ShareCode: undefined;
+    JoinRoom: undefined;
+    Results: undefined;
 };
 
 const Stack = createStackNavigator<RootNavigatorParamList>();
@@ -34,7 +42,11 @@ export default function RootNavigator(): JSX.Element {
                     options={{ gestureEnabled: false }}
                 />
                 <Stack.Screen name={"Group"} component={Group} />
-                {/* <Stack.Screen name={"Matching"} component={Matching} /> */}
+                <Stack.Screen name={"Matching"} component={Matching} />
+                <Stack.Screen name={"CreateRoom"} component={CreateRoom} />
+                <Stack.Screen name={"ShareCode"} component={ShareCode} />
+                <Stack.Screen name={"JoinRoom"} component={JoinRoom} />
+                <Stack.Screen name={"Results"} component={Results} />
             </Stack.Navigator>
         </NavigationContainer>
     );

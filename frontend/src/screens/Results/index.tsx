@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { StackNavigationProp } from "@react-navigation/stack";
 
-import { getRestaurants, getResults, getRoom } from "@api/main";
+import { getRestaurant, getResults, getRoom } from "@api/main";
 import { getUserID, getUsername } from "@utils/auth";
 import { getRoomID, saveQuery, saveRoomID } from "@utils/room";
 
@@ -11,41 +11,31 @@ import { Input } from "@components/Input";
 import { Button } from "@components/Button";
 
 import styles from "./styles";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 
 type LandingScreenNavigationProp = StackNavigationProp<
     RootNavigatorParamList,
-    "JoinRoom"
+    "Results"
 >;
 
 interface Props {
     navigation: LandingScreenNavigationProp;
 }
 
+type FinalResult = {
+    name: string;
+    user_id: string;
+};
+
 const Results = ({ navigation }: Props): JSX.Element => {
-    const [roomID, setRoomID] = useState<string>("");
-    const [roomIDError, setRoomIDError] = useState<string>("");
-    const [loading, setLoading] = useState(false);
-    const [results, setResults] = useState<Result[]>([]);
-    const [restaurants, setRestaurants] = useState<Restaurant[]>();
+    const [map, setMap] = useState<{ [key: string]: number }>();
+    const [numPersons, setNumPersons] = useState<number>();
+    const [results, setResults] = useState<FinalResult[]>([]);
 
-    useEffect(() => {
-        const fn = async () => {
-            const roomID = await getRoomID();
-            const query = await (await getRoom(parseInt(roomID, 10))).data
-                .query;
-            console.log(query);
-            const res = await getRestaurants(query || "");
-            setRestaurants(res.data as Restaurant[]);
-        };
-        fn();
-    }, []);
-    console.log(restaurants);
-
-    const findNumOfPerson = () => {
+    const findNumOfPerson = (results: FinalResult[]) => {
         const map: { [key: string]: number } = {};
         let num = 0;
-        for (let i = 0; i < results!.length; i++) {
+        for (let i = 0; i < results.length; i++) {
             if (!(results[i].user_id in map)) {
                 map[results[i].user_id] = 1;
                 num++;
@@ -54,39 +44,48 @@ const Results = ({ navigation }: Props): JSX.Element => {
         return num;
     };
 
-    const numPersons = findNumOfPerson();
-    console.log("NUMPERSONS");
-    console.log(numPersons);
-
-    const createMap = () => {
+    const createMap = (results: FinalResult[]) => {
         const map: { [key: string]: number } = {};
-        for (let i = 0; i < results!.length; i++) {
-            if (!(results[i].restaurant_id in map)) {
-                map[results[i].restaurant_id] = 0;
+        for (let i = 0; i < results.length; i++) {
+            if (!(results[i].name in map)) {
+                map[results[i].name] = 0;
             }
-            map[results[i].restaurant_id]++;
+            map[results[i].name]++;
         }
         return map;
     };
-
-    const map = createMap();
-    console.log(map);
 
     useEffect(() => {
         const fn = async () => {
             const res = await getResults(
                 parseInt((await getRoomID()) || "", 10)
             );
-            setResults(res.data);
+            const raw = res.data;
+            const results = [];
+            for (let i = 0; i < raw.length; i++) {
+                if (raw[i].vote) {
+                    const restaurant = await getRestaurant(
+                        raw[i].restaurant_id
+                    );
+                    results.push({
+                        name: restaurant.data.name,
+                        user_id: raw[i].user_id,
+                    });
+                }
+            }
+            setResults(results);
+            setNumPersons(findNumOfPerson(results));
+            setMap(createMap(results));
         };
-
         fn();
     }, []);
 
-    const onChangeID = (text: string) => {
-        setRoomID(text);
-        setRoomIDError("");
-    };
+    console.log("------");
+    console.log(results);
+    console.log(numPersons);
+    console.log(map);
+
+    const duplicates: { [key: string]: number } = {};
 
     return (
         <Box backgroundColor="background2" style={styles.screen}>
@@ -94,13 +93,28 @@ const Results = ({ navigation }: Props): JSX.Element => {
                 Results
             </Text>
 
-            {results
-                ?.filter((x) => map[x.restaurant_id] === numPersons && x.vote)
-                .map((x) => (
-                    <Text variant="h1" color="primary">
-                        {restaurants?.[x.restaurant_id]?.name || ""}
-                    </Text>
-                ))}
+            <View style={styles.container}>
+                {results.length !== 0 && map && numPersons ? (
+                    <>
+                        {results
+                            .filter((result) => map[result.name] === numPersons)
+                            .map((result) => {
+                                if (!(result.name in duplicates)) {
+                                    duplicates[result.name] = 1;
+                                    return (
+                                        <Text variant="h1" color="primary">
+                                            {result.name}
+                                        </Text>
+                                    );
+                                }
+                            })}
+                    </>
+                ) : (
+                    <ActivityIndicator
+                        style={{ position: "absolute", top: "50%" }}
+                    />
+                )}
+            </View>
         </Box>
     );
 };

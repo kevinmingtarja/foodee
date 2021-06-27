@@ -14,7 +14,6 @@ export const saveQuery = (query: string) =>
 
 export const getRoomID: () => Promise<string | null> = async () => {
     const [roomID] = await Promise.all([getItem(ROOM_ID_KEY)]);
-    console.log("ROOMID " + roomID);
     if (!roomID) return null;
     return roomID;
 };

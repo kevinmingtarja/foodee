@@ -6,6 +6,9 @@ import useRequest from "./swr";
 export const getRestaurants = (query: string) =>
     request.get(`/api/restaurants?${query}`);
 
+export const getRestaurant = (id: string) =>
+    request.get(`/api/restaurants/${id}`);
+
 export const createRoom = (data: {
     user_id: string;
     username: string;
@@ -33,4 +36,4 @@ export const postVote = (data: Vote, room_id: number) =>
     request.post(`/api/rooms/${room_id}/vote`, data);
 
 export const getResults = (room_id: number) =>
-    request.get(`/api/rooms/${room_id}/results`);
+    request.get<Result[]>(`/api/rooms/${room_id}/results`);

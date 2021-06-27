@@ -14,6 +14,11 @@ const styles = StyleSheet.create({
         marginTop: 24,
         alignItems: "center",
     },
+    container: {
+        marginTop: 50,
+        justifyContent: "center",
+        alignItems: "center",
+    },
 });
 
 export default styles;

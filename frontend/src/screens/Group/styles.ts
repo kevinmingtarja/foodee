@@ -1,21 +1,20 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions } from "react-native"
 
-const { height, width } = Dimensions.get("window");
+const { height, width } = Dimensions.get("window")
 
 const styles = StyleSheet.create({
-    screen: {
-        paddingHorizontal: 16,
-        paddingTop: 50,
-        height: height,
-        alignItems: "center",
-    },
-    btnContainer: {
-        marginTop: height - 250,
-    },
-    btn: {},
-    btn2: {
-        marginTop: 16,
-    },
-});
+  screen: {
+    paddingHorizontal: 16,
+    paddingTop: 50,
+    height: height,
+    alignItems: "center",
+  },
+  btnContainer: {
+    marginTop: height - 300,
+  },
+  btn2: {
+    marginTop: 16,
+  },
+})
 
-export default styles;
+export default styles

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "foodee",
+    "slug": "foodee",
     "version": "1.0.0",
     "orientation": "portrait",
     "splash": {
@@ -12,20 +12,20 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.foodee.foodee",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/foreground.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.foodee.foodee",
+      "versionCode": 1
     },
-    "web": {
-
-    }
+    "web": {}
   }
 }
